@@ -15,13 +15,11 @@ pygame.display.set_caption('Pong')
 cor_objetos=pygame.Color('gray')
 bola=pygame.Rect((lar/2-10,alt/2-10),(20,20))
 jogador=pygame.Rect((5,alt/2-70),(10,140))
-inimigo=pygame.Rect((lar-10,alt/2-70),(10,140))
 
 #variáveis de controle
 vx_bola=7
 vy_bola=7
 v_jogador=7
-v_inimigo=5
 
 #loop principal
 while True:
@@ -36,45 +34,30 @@ while True:
     tela.fill(cor_fundo) 
     pygame.draw.ellipse(tela,cor_objetos,bola)
     pygame.draw.rect(tela,cor_objetos,jogador)
-    pygame.draw.rect(tela,cor_objetos,inimigo)
-    pygame.draw.aaline(tela, cor_objetos, (lar/2, 0),(lar/2, alt))
     
     #animações
-    
-    #movimentação da bola
     bola.x+=vx_bola
-    bola.y+=vy_bola   
+    bola.y+=vy_bola
+    
+    #controle de colisão
+    
+    #colisões com as bordas
     if bola.left<=0 or bola.right>=lar:
         vx_bola*=-1
     if bola.top<=0 or bola.bottom>=alt:
         vy_bola*=-1
-    if bola.colliderect(jogador)or bola.colliderect(inimigo):
+    
+    #colisão com jogador e oponente
+    if bola.colliderect(jogador):
         vx_bola*=-1      
     
     #movimentação do jogador
     keys=pygame.key.get_pressed()
-    
     if keys[pygame.K_UP]:
-        jogador.y-=v_jogador 
+        jogador.y-=v_jogador
+        
     if keys[pygame.K_DOWN]:
         jogador.y+=v_jogador
-        
-    if jogador.top<=0:
-        jogador.top=0
-    if jogador.bottom>=alt:
-        jogador.bottom=alt
-        
-    #IA do inimigo
-    if inimigo.centery<bola.centery:
-        inimigo.y+=v_inimigo
-    if inimigo.centery>bola.centery:
-        inimigo.y-=v_inimigo
-        
-    if inimigo.top<=0:
-        inimigo.top=0
-    if inimigo.bottom>=alt:
-        inimigo.bottom=alt
-    
         
     #Atualização da tela
     pygame.display.flip()
