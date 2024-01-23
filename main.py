@@ -36,6 +36,13 @@ def animacaoBola():
         
     if bola.colliderect(jogador)or bola.colliderect(inimigo):
         vx_bola*=-1
+
+def colisaoTraves(trave):
+    if trave.top<=0:
+        trave.top=0
+    if trave.bottom>=alt:
+        trave.bottom=alt
+    
   
 def animacaoJogador():
     keys=pygame.key.get_pressed()
@@ -45,22 +52,16 @@ def animacaoJogador():
     if keys[pygame.K_DOWN]:
         jogador.y+=v_jogador
         
-    if jogador.top<=0:
-        jogador.top=0
-    if jogador.bottom>=alt:
-        jogador.bottom=alt
+    colisaoTraves(jogador)
         
 def animacaoInimigo():
     
     if inimigo.centery < bola.centery:
         inimigo.y += v_inimigo
-    elif inimigo.centery > bola.centery:
+    if inimigo.centery > bola.centery:
         inimigo.y -= v_inimigo
 
-    if inimigo.top <= 0:
-        inimigo.top = 0
-    if inimigo.bottom >= alt:
-        inimigo.bottom = alt
+    colisaoTraves(inimigo)
              
 #loop principal
 while True:
