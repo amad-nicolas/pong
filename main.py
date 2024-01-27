@@ -22,6 +22,9 @@ vx_bola=7
 vy_bola=7
 v_jogador=7
 v_inimigo=5
+pontos_jogador=0
+pontos_inimigo=0
+fonte=pygame.font.Font('freesansbold.ttf',45)
 
 def animacaoBola():
     global vx_bola,vy_bola
@@ -78,6 +81,11 @@ while True:
     pygame.draw.rect(tela,cor_objetos,jogador)
     pygame.draw.rect(tela,cor_objetos,inimigo)
     pygame.draw.aaline(tela, cor_objetos, (lar/2, 0),(lar/2, alt))
+    
+    placar_jogador=fonte.render(f'{pontos_jogador}',False,cor_objetos)
+    placar_inimigo=fonte.render(f'{pontos_inimigo}',False,cor_objetos)
+    tela.blit(placar_jogador,(400,400))
+    tela.blit(placar_jogador,(600,400))
     
     #animações
     animacaoBola()
